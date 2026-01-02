@@ -6,7 +6,7 @@ namespace TestesAutomatizados.Page
     {
         public void EnterZipCode()
         {
-            WriteText("//*[@id='endereco']", "15606160");
+            WriteText("//*[@id='endereco']", "preencher_cep");
         }
 
         public void ClickBtnZipCode()
@@ -16,16 +16,16 @@ namespace TestesAutomatizados.Page
 
         public void ValidadeResult()
         {
-            ValidateData("//*[@id='resultado-DNEC']//tr[1]/td[1]", "Rua Rio Grande do Norte - lado ímpar");
+            ValidateData("//*[@id='resultado-DNEC']//tr[1]/td[1]", "preencher_endereço");
         }
 
         public void ValidadeResultTotal()
         {
             string[] data = {
-                "Rua Rio Grande do Norte - lado ímpar",
-                "Brasilândia",
-                "Fernandópolis/SP",
-                "15606-160"
+                "preencher_endereço",
+                "preencher_bairro",
+                "preencher_cidade/preencher_uf",
+                "preencher_cep"
             };
             for (int i = 0; i < data.Length; i++)
             {
