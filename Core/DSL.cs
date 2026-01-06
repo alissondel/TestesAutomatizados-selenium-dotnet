@@ -50,32 +50,60 @@ namespace TestesAutomatizados.Core
         // Método para interagir com input da pagina inserindo valor no campo via XPath
         public void WriteText (string xpath, string value)
         {
-            driver.FindElement(By.XPath(xpath)).SendKeys(value);
+            try 
+            {
+                driver.FindElement(By.XPath(xpath)).SendKeys(value);
+                if(description != null) Console.WriteLine("Preenchido o campo: " + description);
+            } 
+            catch 
+            {
+                if (description != null) Console.WriteLine("Erro ao preencher: " + description);
+                Assert.Fail();
+            }
         }
 
         // Método para interagir dando clique no botão pegando valor via XPath
         public void ClickElement (string element)
         {
-            driver.FindElement(By.XPath(element)).Click();
+            try
+            {
+                driver.FindElement(By.XPath(element)).Click();
+                Wait(1000); // 1 segundo de espera após o clique
+                if (description != null) Console.WriteLine("Clicou em: " + description);
+            }
+            catch 
+            {
+                if (description != null) Console.WriteLine("Erro ao clicar em: " + description);
+                Assert.Fail();
+            }
         }
-
-        #endregion
-
+        
         // Método para validar se o valor esperado está presente na tela via XPath
         public void ValidateData(string xpath, string value)
         {
-            // O site do correio possui um recaptcha e que atrapalha o teste, por isso foi necessário implementar o WebDriverWait para aguardar o carregamento do elemento antes da validação
-            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(15));
-
-            wait.Until(d =>
-                d.FindElement(By.XPath(xpath)).Text.Contains(value)
-            );
-
-            Assert.That(
-                driver.FindElement(By.XPath(xpath)).Text,
-                Does.Contain(value)
-            );
-            //Assert.That(driver.FindElement(By.XPath(xpath)).Text, Does.Contain(value));
+            try 
+            {    
+                // O site do correio possui um recaptcha e que atrapalha o teste, por isso foi necessário implementar o WebDriverWait para aguardar o carregamento do elemento antes da validação
+                var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(15));
+            
+                wait.Until(d =>
+                    d.FindElement(By.XPath(xpath)).Text.Contains(value)
+                );
+            
+                Assert.That(
+                    driver.FindElement(By.XPath(xpath)).Text,
+                    Does.Contain(value)
+                );
+                //Assert.That(driver.FindElement(By.XPath(xpath)).Text, Does.Contain(value));
+            
+                if (description != null) Console.WriteLine("Validou: " + description);
+            }
+            catch 
+            {
+                if (description != null) Console.WriteLine("Erro ao validar: " + description);
+                Assert.Fail();
+            }
         }
+        #endregion
     }
 }
