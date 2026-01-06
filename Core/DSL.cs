@@ -78,6 +78,23 @@ namespace TestesAutomatizados.Core
             }
         }
         
+        // Método para interagir em campo select pegando valor via XPath
+        public void MenuDropDown(string xpath, string value, [Optional] string description) {
+            try 
+            {
+                string xPathValue = "//*[text()='" + value + "']";
+                driver.FindElement(By.XPath(xpath)).Click();
+                WaitElement(xPathValue);
+                driver.FindElement(By.XPath(xpath)).Click();
+                if (description != null) Console.WriteLine("Selecionou menu dropdown: " + description);
+            }
+            catch 
+            {
+                if (description != null) Console.WriteLine("Erro ao selecionar menu dropdown: " + description);
+                Assert.Fail();
+            }
+        }
+        
         // Método para validar se o valor esperado está presente na tela via XPath
         public void ValidateData(string xpath, string value)
         {
