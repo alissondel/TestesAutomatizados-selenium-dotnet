@@ -33,5 +33,10 @@ namespace TestesAutomatizados.Page
                 Console.WriteLine("Dados: " + data[i]);
             }
         }
+
+        public void SelectTypeCEP() { 
+            string typeCEP = "preencher_valor_campo";
+            MenuDropDown("//select[@id='tipoCep']", typeCEP, "tipo do CEP:" + typeCEP);
+        }
     }
 }
